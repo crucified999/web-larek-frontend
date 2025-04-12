@@ -1,29 +1,24 @@
 export type Category = 'софт-скил' | 'другое' | 'дополнительное' | 'кнопка' | 'хард-скил';
-export type FormErrors = Partial<Record<keyof IOrderForm, string>>;
+// export type FormErrors = Partial<Record<keyof IOrderForm, string>>;
 
 enum Payment {
 	ONLINE = 'Онлайн',
 	OFFLINE = 'При получении'
 }
 
-export interface IAppState {
-	cart: IProduct[];
-	store: IProduct[];
-	order: IOrderForm;
-	formErrors: FormErrors;
-
-	addToCart(item: IProduct): void;
-	deleteFromCart(item: IProduct): void;
-	clearCart(): void
-	getCartAmount(): void;
-	getCartTotalPrice(): void;
-	setItems(): void;
-	refreshCart(): void;
-
-}
-
 export interface IView {
 	render(data?: object): HTMLElement;
+}
+
+export interface IHeader {
+	cart: ICart;
+	homePage: HTMLAnchorElement;
+}
+
+export interface IPage {
+	header: IHeader;
+	catalog: ICardsCatalog;
+	locked: boolean;
 }
 
 export interface IFormState {
@@ -36,9 +31,9 @@ export interface ApiResponse {
 }
 
 export interface ICart {
-	items: IProduct[];
-	add(item: IProduct): void;
-	delete(item: IProduct): void;
+	items: Map<string, number>;
+	add(id: string): void;
+	delete(id: string): void;
 }
 
 export interface IProduct {
@@ -50,14 +45,26 @@ export interface IProduct {
 	selected: boolean;
 }
 
-export interface ICard {
+export interface ICardPreview extends IProduct {
+	description: string;
+}
+
+export interface IStoreCard {
 	id: string;
-	title: HTMLElement;
-	category: HTMLElement;
-	image: HTMLImageElement;
+	category: Category;
+	title: string;
 	price: number | null;
 	selected: boolean;
 }
+
+// export interface ICard {
+// 	id: string;
+// 	category: Category;
+// 	title: string;
+// 	image: string;
+// 	price: number | null;
+// 	selected: boolean;
+// }
 
 export interface ICartItem {
 	id: string;
@@ -66,15 +73,31 @@ export interface ICartItem {
 	deleteButton: HTMLButtonElement;
 }
 
-export interface ICatalog {
-	items: IProduct[];
-	setItems(item: IProduct[]): void;
-	getProducts(id: string): IProduct;
+export interface ICardsCatalog {
+	products: IProduct[];
+
+	setCards(items: IProduct[]): void;
+	getCard(id: string): IProduct;
 }
 
-export interface IOrderForm {
-	payment: Payment;
-	address: string;
-	email: string;
-	phone: string;
+export interface IModal {
+	content: HTMLElement;
+
+	showModal(): void;
+	closeModal(): void;
 }
+
+// export interface IModalWithForm {
+// 	form: HTMLFormElement;
+// 	formName: string;
+// 	fields: NodeListOf<HTMLInputElement>;
+// 	submitButton: HTMLButtonElement;
+// 	errors: Record<string, HTMLElement>;
+// }
+
+// export interface IOrderForm {
+// 	payment: Payment;
+// 	address: string;
+// 	email: string;
+// 	phone: string;
+// }
