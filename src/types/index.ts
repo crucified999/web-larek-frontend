@@ -11,13 +11,13 @@ export interface IView {
 }
 
 export interface IHeader {
-	cart: ICart;
-	homePage: HTMLAnchorElement;
+	cart: HTMLElement;
+	homePage: string;
 }
 
 export interface IPage {
-	header: IHeader;
-	catalog: ICardsCatalog;
+	header: HTMLElement;
+	catalog: HTMLElement;
 	locked: boolean;
 }
 
@@ -31,9 +31,11 @@ export interface ApiResponse {
 }
 
 export interface ICart {
-	items: Map<string, number>;
+	items: string[];
 	add(id: string): void;
 	delete(id: string): void;
+	refreshOrder(): void;
+	getTotalPrice(): number;
 }
 
 export interface IProduct {
@@ -95,9 +97,12 @@ export interface IModal {
 // 	errors: Record<string, HTMLElement>;
 // }
 
-// export interface IOrderForm {
-// 	payment: Payment;
-// 	address: string;
-// 	email: string;
-// 	phone: string;
-// }
+export interface IOrder {
+	payment: Payment;
+	address: string;
+}
+
+export interface IConatacts {
+	email: string;
+	phone: string;
+}
