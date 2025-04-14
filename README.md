@@ -140,7 +140,12 @@ interface ICart {
 Класс имплементирует интерфейс IOrder.
 
 ```typescript
-interface IOrder {
+interface IFormState {
+	valid: boolean;
+	errors: string[];
+}
+
+interface IOrder extends IFormState {
 	payment: Payment;
 	address: string;
 }
@@ -153,9 +158,12 @@ interface IOrder {
 
 - `payment: Payment` - способ оплаты, который выбрал пользователь
 - `address: string` - адрес доставки
+- `valid: boolean` - флаг валидности формы
+- `errors: string[]` - текста ошибок
 
 Методы:
 
+- `validate(): void` - метод валидации формы
 - `get payment(): Payment` - геттер для способа оплаты
 - `get address(): string` - геттер адреса
 
@@ -164,7 +172,12 @@ interface IOrder {
 Класс имплементирует интерфейс IContacts.
 
 ```typescript
-interface IOrder {
+interface IFormState {
+	valid: boolean;
+	errors: string[];
+}
+
+interface IOrder extends IFormState {
 	phone: string;
 	email: string;
 }
@@ -177,9 +190,12 @@ interface IOrder {
 
 - `phone: string` - номер телефона пользователя
 - `email: string` - адрес электронной почты пользователя
+- `valid: boolean` - флаг валидности формы
+- `errors: string[]` - текста ошибок
 
 Методы:
 
+- `validate(): void` - метод валидации формы
 - `get phone(): string` - геттер номера телефона
 - `get email(): string` - геттер адреса электронной почты
 
@@ -242,9 +258,8 @@ interface IModal {
 
 Методы:
 
-- `set content(value: HTMLElement)` - сеттер контента модального окна
-- `render(data: object): HTMLElement` - возвращает контейнер модального окна и показывает его пользователю
 - `close(): void` - закрывает модальное окно, дополнительно очищает поля ввода форм
+- `render(data: object): HTMLElement` - возвращает контейнер модального окна и показывает его пользователю
 
 ### Класс ModalWithForm
 
@@ -364,8 +379,8 @@ interface IView {
 
 ```typescript
 interface IHeader {
-	cart: HTMLElement;
-	homePage: string;
+	counter: number;
+	cartButton: HTMLButtonElement;
 }
 ```
 
@@ -374,13 +389,13 @@ interface IHeader {
 
 Поля класса:
 
-- `_cart: HTMLElement` - контейнер корзины с товарами
-- `_homePage: string` - ссылка на главную страницу
+- `counter: number` - счетчик, показывающий количество товаров в корзине
+- `cartButton: HTMLButtonElement` - кнопка открытия корзины
 
 Методы:
 
-- `set cart(value: HTMLElement)` - сеттер корзины с товарами
-- `set homePage(value: string)` - сеттер ссылки на главную страницу
+- `set counter(value: number)` - сеттер счетчика корзины с товарами
+- `set cartButton(value: HTMLButtonElement)` - сеттер кнопки открытия корзины с товарами
 
 ### Класс Page
 

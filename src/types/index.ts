@@ -11,8 +11,8 @@ export interface IView {
 }
 
 export interface IHeader {
-	cart: HTMLElement;
-	homePage: string;
+	counter: number;
+	cartButton: HTMLButtonElement;
 }
 
 export interface IPage {
@@ -97,12 +97,17 @@ export interface IModal {
 // 	errors: Record<string, HTMLElement>;
 // }
 
-export interface IOrder {
+export interface IFormState {
+	valid: boolean;
+	errors: string[];
+}
+
+export interface IOrder extends IFormState {
 	payment: Payment;
 	address: string;
 }
 
-export interface IConatacts {
+export interface IConatacts extends IFormState {
 	email: string;
 	phone: string;
 }
