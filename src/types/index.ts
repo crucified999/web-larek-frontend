@@ -1,7 +1,8 @@
 export type Category = 'софт-скил' | 'другое' | 'дополнительное' | 'кнопка' | 'хард-скил';
-// export type FormErrors = Partial<Record<keyof IOrderForm, string>>;
+export type TOrderInfo = Pick<IOrder, 'address'>;
+export type TContactsInfo = Pick<IContacts, 'phone' | 'email'>;
 
-enum Payment {
+export enum Payment {
 	ONLINE = 'Онлайн',
 	OFFLINE = 'При получении'
 }
@@ -24,6 +25,7 @@ export interface IPage {
 export interface IFormState {
 	valid: boolean;
 	errors: string[];
+	checkValidation<T>(data: Record<keyof T, string>): boolean;
 }
 
 export interface ApiResponse {
@@ -31,8 +33,8 @@ export interface ApiResponse {
 }
 
 export interface ICart {
-	items: string[];
-	add(id: string): void;
+	items: IProduct[];
+	add(item: IProduct): void;
 	delete(id: string): void;
 	refreshOrder(): void;
 	getTotalPrice(): number;
@@ -53,33 +55,18 @@ export interface ICardPreview extends IProduct {
 
 export interface IStoreCard {
 	id: string;
+	index: string;
 	category: Category;
 	title: string;
 	price: number | null;
 	selected: boolean;
 }
 
-// export interface ICard {
-// 	id: string;
-// 	category: Category;
-// 	title: string;
-// 	image: string;
-// 	price: number | null;
-// 	selected: boolean;
-// }
-
-export interface ICartItem {
-	id: string;
-	title: string;
-	price: number | null;
-	deleteButton: HTMLButtonElement;
-}
-
 export interface ICardsCatalog {
 	products: IProduct[];
 
-	setCards(items: IProduct[]): void;
-	getCard(id: string): IProduct;
+	setItems(items: IProduct[]): void;
+	getItem(id: string): IProduct;
 }
 
 export interface IModal {
@@ -88,14 +75,6 @@ export interface IModal {
 	showModal(): void;
 	closeModal(): void;
 }
-
-// export interface IModalWithForm {
-// 	form: HTMLFormElement;
-// 	formName: string;
-// 	fields: NodeListOf<HTMLInputElement>;
-// 	submitButton: HTMLButtonElement;
-// 	errors: Record<string, HTMLElement>;
-// }
 
 export interface IFormState {
 	valid: boolean;
@@ -107,7 +86,7 @@ export interface IOrder extends IFormState {
 	address: string;
 }
 
-export interface IConatacts extends IFormState {
+export interface IContacts extends IFormState {
 	email: string;
 	phone: string;
 }

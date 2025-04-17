@@ -89,8 +89,8 @@ interface IEvents {
 interface ICardsCatalog {
 	products: IProduct[];
 
-	setCards(items: ICard[]): void;
-	getCard(id: string): ICard;
+	setItems(items: ICard[]): void;
+	getItem(id: string): ICard;
 }
 ```
 
@@ -103,8 +103,8 @@ interface ICardsCatalog {
 
 Так же класс предоставляет набор методов для работы с этими данными:
 
-- `setCards(items: ICard[]): void` - добавляет в `_items` карточки товаров, данные которых приходят с сервера
-- `getCard(id: string): ICard` - позволяет выбрать карточку товара по ее уникальному номеру
+- `setItems(items: ICard[]): void` - добавляет в `_items` карточки товаров, данные которых приходят с сервера
+- `getItem(id: string): ICard` - позволяет выбрать карточку товара по ее уникальному номеру
 
 
 ### Класс Сart
@@ -148,6 +148,7 @@ interface IFormState {
 interface IOrder extends IFormState {
 	payment: Payment;
 	address: string;
+	checkValidation<T>(data: Record<keyof T, string>): boolean;
 }
 ```
 
@@ -163,7 +164,7 @@ interface IOrder extends IFormState {
 
 Методы:
 
-- `validate(): void` - метод валидации формы
+- `checkValidation(data: Record<keyof TCardInfo, string>): void` - метод валидации формы
 - `get payment(): Payment` - геттер для способа оплаты
 - `get address(): string` - геттер адреса
 
@@ -175,6 +176,7 @@ interface IOrder extends IFormState {
 interface IFormState {
 	valid: boolean;
 	errors: string[];
+	checkValidation<T>(data: Record<keyof T, string>): boolean;
 }
 
 interface IOrder extends IFormState {
@@ -243,9 +245,9 @@ interface IModal {
 
 Так же класс реализует набор методов:
 
+- `set content(value: HTMLElement)` - сеттер для контента модального окна
 - `showModal(): void` - позволяет открыть модальное окно
 - `closeModal(): void` - позволяет закрыть модальное окно
-- `set content(value: HTMLElement)` - сеттер для контента модального окна
 
 ### Класс SuccessModal
 
@@ -281,6 +283,8 @@ interface IModal {
 Методы:
 
 - `setValid(isValid: boolean): void` - изменяет активность кнопки сабмита
+- `close(): void` - закрывает модальное окно, дополнительно очищает поля ввода форм
+- `render(data: object): HTMLElement` - возвращает контейнер модального окна и показывает его пользователю
 
 
 ### Класс ModalOrderConfirm
@@ -356,7 +360,7 @@ interface IView {
 
 - `render(data: IStoreCard): HTMLElement` - возвращает элемент карточки с заполненными атрибутами
 
-### Класс CardsCatalog
+### Класс CardsCatalogView
 
 Класс имплементирует интерфейс IView.
 
