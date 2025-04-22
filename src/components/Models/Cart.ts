@@ -1,9 +1,8 @@
-import { IProduct, ICart, IView, ApiResponse } from '../types';
-import { IEvents } from './base/events';
-import { ensureElement } from '../utils/utils';
+import { IProduct, ICart } from '../../types';
+import { IEvents } from '../base/events';
 
 
-class Cart implements ICart {
+export class Cart implements ICart {
 
 	items: IProduct[] = [];
 
@@ -12,22 +11,29 @@ class Cart implements ICart {
 	add(item: IProduct): void {
 		this.items.push(item);
 
+		item.isInCart = true;
+
 		this.events.emit('cart:changed', this.items);
 	}
 
 	delete(id: string) {
 		for (let i = 0; i < this.items.length; i++) {
 			if (this.items[i].id === id) {
+				this.items[i].isInCart = false;
 				this.items.splice(i, 1);
 				break;
 			}
 		}
 
 		this.events.emit('cart:changed', this.items);
-		this.events.emit('cart:delete');
 	}
 
 	refreshOrder() {
+
+		for (const product of this.items) {
+			product.isInCart = false;
+		}
+
 		this.items = [];
 
 		this.events.emit('cart:changed', this.items);
@@ -44,19 +50,3 @@ class Cart implements ICart {
 	}
 }
 
-class CartView implements IView {
-	protected _content: HTMLElement;
-
-	constructor(protected container: HTMLElement) {}
-
-	render(data: { items: HTMLElement[] }): HTMLElement {
-
-		data.items.forEach((item) => {
-			this._content.appendChild(item);
-		});
-
-		this.container.appendChild(this._content);
-
-		return this.container;
-	}
-}

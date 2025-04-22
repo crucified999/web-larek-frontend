@@ -1,11 +1,4 @@
 export type Category = 'софт-скил' | 'другое' | 'дополнительное' | 'кнопка' | 'хард-скил';
-export type TOrderInfo = Pick<IOrder, 'address'>;
-export type TContactsInfo = Pick<IContacts, 'phone' | 'email'>;
-
-export enum Payment {
-	ONLINE = 'Онлайн',
-	OFFLINE = 'При получении'
-}
 
 export interface IView {
 	render(data?: object): HTMLElement;
@@ -18,14 +11,13 @@ export interface IHeader {
 
 export interface IPage {
 	header: HTMLElement;
-	catalog: HTMLElement;
+	catalog: HTMLElement[];
 	locked: boolean;
 }
 
-export interface IFormState {
+export interface IFormState<T> {
 	valid: boolean;
-	errors: string[];
-	checkValidation<T>(data: Record<keyof T, string>): boolean;
+	errors: T
 }
 
 export interface ApiResponse {
@@ -42,24 +34,17 @@ export interface ICart {
 
 export interface IProduct {
 	id: string;
-	category: Category;
+	index?: number;
+	category?: Category;
 	title: string;
-	image: string;
+	image?: string;
+	description?: string;
 	price: number | null;
-	selected: boolean;
+	isInCart: boolean;
 }
 
-export interface ICardPreview extends IProduct {
-	description: string;
-}
-
-export interface IStoreCard {
-	id: string;
-	index: string;
-	category: Category;
-	title: string;
-	price: number | null;
-	selected: boolean;
+export interface IActions {
+	onClick: (event: MouseEvent) => void;
 }
 
 export interface ICardsCatalog {
@@ -76,17 +61,12 @@ export interface IModal {
 	closeModal(): void;
 }
 
-export interface IFormState {
-	valid: boolean;
-	errors: string[];
-}
-
-export interface IOrder extends IFormState {
-	payment: Payment;
+export interface IOrder {
+	payment: string;
 	address: string;
 }
 
-export interface IContacts extends IFormState {
+export interface IContacts {
 	email: string;
 	phone: string;
 }
