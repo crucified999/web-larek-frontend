@@ -7,17 +7,13 @@ export class Modal implements IModal {
 	protected _closeButton: HTMLButtonElement;
 
 	constructor(protected container: HTMLElement, protected events: IEvents) {
-		this._closeButton = this.container.querySelector('.modal__close');
 		this._content = this.container.querySelector('.modal__content');
+		this._closeButton = this.container.querySelector('.modal__close');
 
 		this._closeButton.addEventListener('click', () => {
 			this.closeModal();
 			this.events.emit('order:succes');
 		});
-	}
-
-	set content(value: HTMLElement) {
-		this._content.replaceChildren(value);
 	}
 
 	showModal() {
@@ -27,6 +23,10 @@ export class Modal implements IModal {
 	closeModal() {
 		this.container.classList.remove('modal_active');
 		this.events.emit('modal:close');
+	}
+
+	set content(value: HTMLElement) {
+		this._content.replaceChildren(value);
 	}
 
 	render() {

@@ -74,7 +74,6 @@ events.on('card:select', (item: IProduct) => {
 
 	modal.content = cardPreview;
 	modal.render();
-
 })
 
 events.on('modal:close', () => {
@@ -145,7 +144,6 @@ events.on('orderInput:change', (data: { field: keyof IOrder, value: string }) =>
 
 events.on('order:submit', () => {
 	modal.content = contacts.render();
-	modal.render();
 });
 
 events.on('contactsErrors:change', (errors: Partial<IContacts>) => {
@@ -188,7 +186,7 @@ events.on('contacts:submit', () => {
 			contacts.clearInputs();
 			header.counter = 0;
 			modal.content = success.render({ price: response.total });
-			modal.render();
+			// modal.render();
 		})
 		.catch((err) => {
 			console.log(err);

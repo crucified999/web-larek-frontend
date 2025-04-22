@@ -32,6 +32,5 @@ export class OrderForm extends Form<IOrder> {
 	disableButtons() {
 		this._buttonCard.classList.remove('button_alt');
 		this._buttonCash.classList.remove('button_alt');
-		this
 	}
 }

@@ -1,4 +1,4 @@
-import { IActions, IView } from '../../types';
+import { IView } from '../../types';
 import { cloneTemplate, handlePrice } from '../../utils/utils';
 import { IEvents } from '../base/events';
 

@@ -2,7 +2,6 @@ import validate from 'validate.js';
 import { IOrder, IFormState } from '../../types';
 import { IEvents } from '../base/events';
 import { constraintsOrder } from '../../utils/constants';
-import { data } from 'autoprefixer';
 
 export class Order implements IOrder, IFormState<IOrder> {
 
