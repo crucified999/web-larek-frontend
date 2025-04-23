@@ -21,9 +21,7 @@ export class CartView implements IView {
 
 	}
 
-	render(data: { content: HTMLElement[] }): HTMLElement {
-
-		let totalPrice = 0;
+	render(data: { content: HTMLElement[], price: number }): HTMLElement {
 
 		this._cartList.replaceChildren(...data.content);
 
@@ -31,13 +29,9 @@ export class CartView implements IView {
 			this._orderButton.disabled = true;
 		} else {
 			this._orderButton.disabled = false;
-
-			data.content.forEach((item) => {
-				totalPrice += parseInt(item.querySelector('.card__price').textContent.split(' ').join(''));
-			});
 		}
 
-		this._totalPrice.textContent = handlePrice(String(totalPrice)) + ' синапсов';
+		this._totalPrice.textContent = handlePrice(String(data.price)) + ' синапсов';
 
 		return this._content;
 	}

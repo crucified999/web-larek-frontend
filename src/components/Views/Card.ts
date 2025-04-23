@@ -84,7 +84,7 @@ export class CardPreview implements IView {
 		}
 
 		if (this._price.textContent === 'Бесценно') {
-			this._button.removeEventListener('click', this.actions.onClick);
+			this._button.disabled = true;
 		}
 
 		return this._content;

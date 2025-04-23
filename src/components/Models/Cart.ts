@@ -28,7 +28,7 @@ export class Cart implements ICart {
 		this.events.emit('cart:changed', this.items);
 	}
 
-	refreshOrder() {
+	clearCart() {
 
 		for (const product of this.items) {
 			product.isInCart = false;

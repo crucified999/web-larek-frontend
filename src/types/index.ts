@@ -28,7 +28,7 @@ export interface ICart {
 	items: IProduct[];
 	add(item: IProduct): void;
 	delete(id: string): void;
-	refreshOrder(): void;
+	clearCart(): void;
 	getTotalPrice(): number;
 }
 

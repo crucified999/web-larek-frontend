@@ -48,7 +48,6 @@ export class Page implements IPage {
 
 	set catalog(items: HTMLElement[]) {
 		this._catalog.replaceChildren(...items);
-		console.log(items);
 	}
 
 	set locked(value: boolean) {

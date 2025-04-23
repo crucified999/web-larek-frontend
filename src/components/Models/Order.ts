@@ -16,7 +16,7 @@ export class Order implements IOrder, IFormState<IOrder> {
 
 	constructor(protected events: IEvents) {}
 
-	checkValidation() {
+	private checkValidation() {
 
 		this.errors.payment = this.checkPayment(this._payment);
 		this.errors.address = this.checkAddress(this._address);
@@ -25,7 +25,7 @@ export class Order implements IOrder, IFormState<IOrder> {
 
 	}
 
-	checkAddress(value: string) {
+	private checkAddress(value: string) {
 		const result = validate.single(value, constraintsOrder.address);
 
 		if (result) {
@@ -35,7 +35,7 @@ export class Order implements IOrder, IFormState<IOrder> {
 		}
 	}
 
-	checkPayment(value: string) {
+	private checkPayment(value: string) {
 		if (!value) {
 			return 'Выберите способ оплаты.'
 		} else {
@@ -51,6 +51,16 @@ export class Order implements IOrder, IFormState<IOrder> {
 				case 'address':
 					this._address = data.value;
 					break;
+		}
+
+		this.checkValidation();
+	}
+
+	clearData() {
+		for (const key in this) {
+			if (typeof this[key] === 'string') {
+				this[key] = null;
+			}
 		}
 	}
 

@@ -99,7 +99,7 @@ events.on('cart:open', () => {
 
 	});
 
-	modal.content = cartView.render({ content: cardsBasket });
+	modal.content = cartView.render({ content: cardsBasket, price: cart.getTotalPrice() });
 	modal.render();
 });
 
@@ -117,7 +117,7 @@ events.on('cart:changed', (items: IProduct[]) => {
 
 	});
 
-	modal.content = cartView.render({ content: cardsBasket });
+	modal.content = cartView.render({ content: cardsBasket, price: cart.getTotalPrice() });
 });
 
 events.on('cart:order', () => {
@@ -138,7 +138,6 @@ events.on('orderErrors:change', (errors: Partial<IOrder>) => {
 events.on('orderInput:change', (data: { field: keyof IOrder, value: string }) => {
 
 	orderData.setField(data);
-	orderData.checkValidation();
 
 });
 
@@ -158,7 +157,6 @@ events.on('contactsErrors:change', (errors: Partial<IContacts>) => {
 events.on('contactsInput:change', (data: { field: keyof IContacts, value: string }) => {
 
 	contactsData.setField(data);
-	contactsData.checkValidation();
 
 });
 
@@ -174,19 +172,17 @@ events.on('contacts:submit', () => {
 			phone: contactsData.phone,
 		})
 		.then((response: { total: number }) => {
-			cart.refreshOrder();
+			cart.clearCart();
 			order.disableButtons();
 			order.clearInputs();
-			orderData.payment = '';
-			orderData.address = '';
-			contactsData.email = '';
-			contactsData.phone = '';
+			orderData.clearData();
+			contactsData.clearData();
 			order.disableSubmitButton();
 			contacts.disableSubmitButton();
 			contacts.clearInputs();
 			header.counter = 0;
 			modal.content = success.render({ price: response.total });
-			// modal.render();
+			modal.render();
 		})
 		.catch((err) => {
 			console.log(err);

@@ -18,7 +18,7 @@ export class Contacts implements IContacts {
 
 	constructor(protected events: IEvents) {}
 
-	checkValidation() {
+	private checkValidation() {
 
 		this.errors.email = this.checkEmail(this._email);
 		this.errors.phone = this.checkPhone(this._phone);
@@ -27,7 +27,7 @@ export class Contacts implements IContacts {
 
 	}
 
-	checkEmail(value: string) {
+	private checkEmail(value: string) {
 		const result = validate.single(value, constraintsContacts.email);
 
 		if (result) {
@@ -37,7 +37,7 @@ export class Contacts implements IContacts {
 		}
 	}
 
-	checkPhone(value: string) {
+	private checkPhone(value: string) {
 		const result = validate.single(value, constraintsContacts.phone);
 
 		if (result) {
@@ -55,6 +55,16 @@ export class Contacts implements IContacts {
 			case 'phone':
 				this._phone = data.value;
 				break;
+		}
+
+		this.checkValidation();
+	}
+
+	clearData() {
+		for (const key in this) {
+			if (typeof this[key] === 'string') {
+				this[key] = null;
+			}
 		}
 	}
 
